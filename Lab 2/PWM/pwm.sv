@@ -1,7 +1,7 @@
 // Generate a synthesizable Verilog module for a parameterizable PWM generator.
 
 // Specifications:
-// - Module name: pwm
+// - Module name: top_module
 // - Parameters:
 //     WIDTH = 16 (default)
 // - Inputs:
