@@ -23,7 +23,7 @@
 // Constraints:
 // - Use synchronous reset logic.
 
-module pwm #(
+module top_module #(
     parameter WIDTH = 16
 ) (
     input  wire                clk,
