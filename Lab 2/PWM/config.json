@@ -1,8 +1,8 @@
 {
 	"general": {
-        "prompt": "./pwm.sv",
+        "prompt": "./pwm.v",
         "name": "top_module",
-        "testbench": "./pwm_tb.sv",
+        "testbench": "./pwm_tb.v",
 		"model_family": "ChatGPT",
 		"model_id": "gpt-4o-mini",
 		"num_candidates": 5,
