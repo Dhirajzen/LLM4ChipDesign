@@ -4,7 +4,7 @@
 // 	- Outputs:
 // 		- BCD (8-bits: 4-bits for the 10's place and 4-bits for the 1's place)
 
-// How would I write a design that meets these specifications?
+// How would I write a design that meets these specifications? It should be in verilog not in system verilog. Write the code compatible with iverilog
 
 module top_module (
     input  [4:0] binary_input,  // 5-bit binary input (0-31)
