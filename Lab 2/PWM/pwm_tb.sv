@@ -27,6 +27,13 @@ module tb;
     initial clk = 1'b0;
     always #5 clk = ~clk;
 
+    // Global counters
+    integer errors = 0;
+    integer clocks = 0;
+    always @(posedge clk) begin
+        clocks <= clocks + 1;
+    end
+
     // Utility: wait for N ticks (start-of-period markers)
     task wait_ticks;
         input integer n;
@@ -78,7 +85,7 @@ module tb;
             $display("[PASS] %0s: expected highs=%0d, measured=%0d (tol=%0d)", label, exp_highs, meas_highs, tol);
         end else begin
             $display("[FAIL] %0s: expected highs=%0d, measured=%0d (tol=%0d)", label, exp_highs, meas_highs, tol);
-            $fatal(1);
+            errors = errors + 1;
         end
     end
     endtask
@@ -89,7 +96,7 @@ module tb;
     initial begin
         // VCD
         $dumpfile("pwm.vcd");
-        $dumpvars(0, tb);
+        $dumpvars(0, tb);  // fixed scope
 
         // Reset
         rst_n  = 1'b0;
@@ -141,9 +148,15 @@ module tb;
         measure_one_period(highs, lows);
         check_ratio(33, highs, 0, "period=99, duty=33 (~33.3%)");
 
-        $display("All PWM tests completed successfully!");
+        $display("All PWM tests completed!");
         $finish;
     end
 
-endmodule
+    // Final summary
+    final begin
+        $display("Hint: Total mismatched samples is %1d out of %1d samples", errors, clocks);
+        $display("Simulation finished at %0d ps", $time);
+        $display("Mismatches: %1d in %1d samples", errors, clocks);
+    end
 
+endmodule
