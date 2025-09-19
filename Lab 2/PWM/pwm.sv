@@ -1,4 +1,4 @@
-// Generate a synthesizable Verilog module for a parameterizable PWM generator.
+// Generate a synthesizable Verilog module for a parameterizable PWM generator. It should be in verilog not in system verilog. Write the code compatible with iverilog
 
 // Specifications:
 // - Module name: top_module
