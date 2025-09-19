@@ -29,7 +29,7 @@ initial begin
 
     // VCD dump for waveform viewing
     $dumpfile("my_design.vcd");
-    $dumpvars(0, tb_binary_to_bcd_converter);
+    $dumpvars(0, tb);
 
     for (i = 0; i < 32; i = i + 1) begin
         // Apply the test vector
