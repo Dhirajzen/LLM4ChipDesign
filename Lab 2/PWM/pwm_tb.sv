@@ -147,6 +147,8 @@
 
 // endmodule
 
+// pwm_tb.v  (Verilog-2001)
+
 `timescale 1ns/1ps
 
 module pwm_tb;
@@ -161,7 +163,7 @@ module pwm_tb;
     wire                  pwm_out;
     wire                  tick;
 
-    // Instantiate DUT (Verilog-2001 named parameter/value)
+    // Instantiate DUT
     top_module #(.WIDTH(WIDTH)) top_module1 (
         .clk(clk),
         .rst_n(rst_n),
@@ -176,7 +178,7 @@ module pwm_tb;
     initial clk = 1'b0;
     always #5 clk = ~clk;
 
-    // Utility: wait for N ticks (start-of-period markers)
+    // Wait for N ticks (period markers)
     task wait_ticks;
         input integer n;
         integer i;
@@ -184,8 +186,7 @@ module pwm_tb;
         for (i = 0; i < n; i = i + 1) begin
             @(posedge clk);
             while (tick !== 1'b1) @(posedge clk);
-            // consume the tick cycle
-            @(posedge clk);
+            @(posedge clk); // consume the tick cycle
         end
     end
     endtask
@@ -202,12 +203,12 @@ module pwm_tb;
         // Wait for start-of-period
         @(posedge clk);
         while (tick !== 1'b1) @(posedge clk);
-        // Consume this start cycle; now measure 'period' cycles
+        // Now measure exactly 'period' cycles
         count = 0;
         @(posedge clk);
         while (count < period) begin
             if (pwm_out === 1'b1) highs = highs + 1;
-            else lows = lows + 1;
+            else                   lows  = lows  + 1;
             count = count + 1;
             @(posedge clk);
         end
@@ -215,12 +216,12 @@ module pwm_tb;
     endtask
 
     // Check helper with tolerance (0 for exact)
-    // Use a packed vector for label; print with %s (Verilog-2001 friendly)
+    // Pass string literals as packed vectors; print with %s
     task check_ratio;
         input integer exp_highs;
         input integer meas_highs;
         input integer tol;
-        input [8*64-1:0] label; // room for up to 64 chars
+        input [8*64-1:0] label; // up to 64 chars
         integer diff;
     begin
         diff = (meas_highs > exp_highs) ? (meas_highs - exp_highs) : (exp_highs - meas_highs);
@@ -228,7 +229,7 @@ module pwm_tb;
             $display("[PASS] %s: expected highs=%d, measured=%d (tol=%d)", label, exp_highs, meas_highs, tol);
         end else begin
             $display("[FAIL] %s: expected highs=%d, measured=%d (tol=%d)", label, exp_highs, meas_highs, tol);
-            $finish; // instead of $fatal
+            $finish;
         end
     end
     endtask
@@ -260,31 +261,31 @@ module pwm_tb;
         measure_one_period(highs, lows);
         check_ratio(0, highs, 0, "duty=0%");
 
-        // Test 25% duty (25 highs out of 100)
+        // 25%
         duty = 16'd25;
         wait_ticks(2);
         measure_one_period(highs, lows);
         check_ratio(25, highs, 0, "duty=25%");
 
-        // Test 50% duty
+        // 50%
         duty = 16'd50;
         wait_ticks(2);
         measure_one_period(highs, lows);
         check_ratio(50, highs, 0, "duty=50%");
 
-        // Test 75% duty
+        // 75%
         duty = 16'd75;
         wait_ticks(2);
         measure_one_period(highs, lows);
         check_ratio(75, highs, 0, "duty=75%");
 
-        // Test 100% duty (clamped if duty > period)
-        duty = 16'd200; // > period, should clamp to 100
+        // >=100% duty (clamps to period)
+        duty = 16'd200;
         wait_ticks(2);
         measure_one_period(highs, lows);
         check_ratio(100, highs, 0, "duty>=period (100%)");
 
-        // Change period and re-check e.g. 1/3 ~ 33 cycles of 99
+        // period = 99, duty = 33
         period = 16'd99;
         duty   = 16'd33;
         wait_ticks(2);
