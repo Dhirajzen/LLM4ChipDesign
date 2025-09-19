@@ -89,7 +89,7 @@ module tb;
     initial begin
         // VCD
         $dumpfile("pwm.vcd");
-        $dumpvars(0, pwm_tb);
+        $dumpvars(0, tb);
 
         // Reset
         rst_n  = 1'b0;
