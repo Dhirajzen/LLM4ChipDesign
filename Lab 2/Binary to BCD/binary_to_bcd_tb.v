@@ -9,7 +9,7 @@ wire [7:0] bcd_output;
 // Instantiate the Design Under Test (DUT)
 // Note: The module name is changed to 'top_module' to match the design
 // described in the Canvas document.
-top_module top_module1 (
+top_module top_module1(
     .binary_input(binary_input),
     .bcd_output(bcd_output)
 );
@@ -21,11 +21,15 @@ reg [7:0] expected_bcd;
 integer errors = 0;
 integer clocks = 0;
 
-// Main simulation block
+// Main simulation block and VCD dump
 initial begin
     $display("Testing Binary-to-BCD Converter...");
     $display("Time\tBinary\tExpected\tActual\tResult");
     $display("-------------------------------------------------");
+
+    // VCD dump for waveform viewing
+    $dumpfile("my_design.vcd");
+    $dumpvars(0, tb_binary_to_bcd_converter);
 
     for (i = 0; i < 32; i = i + 1) begin
         // Apply the test vector
@@ -49,25 +53,13 @@ initial begin
             $display("%0t\t%0d\t%0d\t\t%0d\t\tPASS", $time, test_binary, expected_bcd, bcd_output);
         end
     end
-end
 
-// Final simulation summary messages as requested
-final begin
+    // Final simulation summary messages as requested
     $display("\n-------------------------------------------------");
     $display("Hint: Total mismatched samples is %1d out of %1d samples", errors, clocks);
     $display("Simulation finished at %0d ps", $time);
     $display("Mismatches: %1d in %1d samples", errors, clocks);
+    $finish; // This line is crucial to prevent the timeout
 end
-
-// VCD dump for waveform viewing
-initial begin
-    $dumpfile("binary_to_bcd.vcd");
-    $dumpvars(0, tb);
-end
-
-// A simple clock for VCD dumping (optional but good practice)
-reg vcd_clk;
-initial vcd_clk = 0;
-always #5 vcd_clk = ~vcd_clk;
 
 endmodule
