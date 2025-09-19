@@ -1,8 +1,8 @@
 {
 	"general": {
-        "prompt": "./binary_to_bcd.v",
+        "prompt": "./binary_to_bcd.sv",
         "name": "top_module",
-        "testbench": "./binary_to_bcd_tb.v",
+        "testbench": "./binary_to_bcd_tb.sv",
 		"model_family": "ChatGPT",
 		"model_id": "gpt-4o-mini",
 		"num_candidates": 5,
