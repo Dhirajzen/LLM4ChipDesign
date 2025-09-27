@@ -1,0 +1,28 @@
+For a 3-bit subtractor, we will use three 1-bit subtractors for the bits A2 A1 A0 (the 3-bit minuend), B2 B1 B0 (the 3-bit subtrahend), and Din (the borrow-in). The equations for the outputs S and D for each bit are as follows:
+
+1. For the least significant bit (LSB), A0 and B0:
+
+   S0 = (!A0 ∨ B0 ∨ Din) ∧ (A0 ∨ !B0 ∨ Din) ∧ (A0 ∨ B0 ∨ !Din)
+
+   D0 = (!A0 ∨ !B0) ∧ (!A0 ∨ Din) ∧ (!B0 ∨ Din)
+
+2. For the next significant bit (middle bit), A1 and B1, using D0 as Din:
+
+   S1 = (!A1 ∨ B1 ∨ D0) ∧ (A1 ∨ !B1 ∨ D0) ∧ (A1 ∨ B1 ∨ !D0)
+
+   D1 = (!A1 ∨ !B1) ∧ (!A1 ∨ D0) ∧ (!B1 ∨ D0)
+
+3. For the most significant bit (MSB), A2 and B2, using D1 as Din:
+
+   S2 = (!A2 ∨ B2 ∨ D1) ∧ (A2 ∨ !B2 ∨ D1) ∧ (A2 ∨ B2 ∨ !D1)
+
+   D2 = (!A2 ∨ !B2) ∧ (!A2 ∨ D1) ∧ (!B2 ∨ D1)
+
+So, the CNF equations for a 3-bit subtractor are:
+
+S0 = (!A0 ∨ B0 ∨ Din) ∧ (A0 ∨ !B0 ∨ Din) ∧ (A0 ∨ B0 ∨ !Din)  
+D0 = (!A0 ∨ !B0) ∧ (!A0 ∨ Din) ∧ (!B0 ∨ Din)  
+S1 = (!A1 ∨ B1 ∨ D0) ∧ (A1 ∨ !B1 ∨ D0) ∧ (A1 ∨ B1 ∨ !D0)  
+D1 = (!A1 ∨ !B1) ∧ (!A1 ∨ D0) ∧ (!B1 ∨ D0)  
+S2 = (!A2 ∨ B2 ∨ D1) ∧ (A2 ∨ !B2 ∨ D1) ∧ (A2 ∨ B2 ∨ !D1)  
+D2 = (!A2 ∨ !B2) ∧ (!A2 ∨ D1) ∧ (!B2 ∨ D1)  
