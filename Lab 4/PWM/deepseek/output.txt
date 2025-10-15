@@ -1,0 +1,78 @@
+Testbench ran successfully
+Total time:  28.223389148712158
+Generation time:  28.198986053466797
+Error handling time:  0.024402379989624023
+Testbench ran successfully
+Total time:  24.361326456069946
+Generation time:  24.33124852180481
+Error handling time:  0.030077695846557617
+Error compiling testbench
+---- iverilog stderr ----
+./top_moduletb.v:15: error: Unknown module type: top_module
+2 error(s) during elaboration.
+*** These modules were missing:
+        top_module referenced 1 times.
+***
+
+-------------------------
+Error compiling testbench
+---- iverilog stderr ----
+./top_moduletb.v:15: error: port ``tick'' is not a port of top_module1.
+1 error(s) during elaboration.
+
+-------------------------
+Error compiling testbench
+---- iverilog stderr ----
+./top_module/top_module.v:20: syntax error
+./top_module/top_module.v:21: Syntax in assignment statement l-value.
+./top_module/top_module.v:26: syntax error
+./top_module/top_module.v:32: error: malformed statement
+./top_module/top_module.v:33: syntax error
+./top_module/top_module.v:33: Syntax in assignment statement l-value.
+./top_module/top_module.v:35: syntax error
+./top_module/top_module.v:44: error: malformed statement
+./top_module/top_module.v:46: syntax error
+./top_module/top_module.v:46: error: malformed statement
+./top_module/top_module.v:48: syntax error
+./top_module/top_module.v:55: error: malformed statement
+./top_module/top_module.v:57: syntax error
+./top_module/top_module.v:62: error: malformed statement
+./top_module/top_module.v:64: syntax error
+./top_moduletb.v:3: error: malformed statement
+./top_moduletb.v:5: syntax error
+./top_moduletb.v:5: Syntax in assignment statement l-value.
+./top_moduletb.v:6: syntax error
+./top_moduletb.v:6: error: malformed statement
+./top_moduletb.v:7: syntax error
+./top_moduletb.v:7: error: malformed statement
+./top_moduletb.v:8: syntax error
+./top_moduletb.v:8: error: malformed statement
+./top_moduletb.v:9: syntax error
+./top_moduletb.v:9: error: malformed statement
+./top_moduletb.v:10: syntax error
+./top_moduletb.v:10: error: malformed statement
+./top_moduletb.v:11: syntax error
+./top_moduletb.v:11: error: malformed statement
+./top_moduletb.v:12: syntax error
+./top_moduletb.v:12: error: malformed statement
+./top_moduletb.v:15: syntax error
+./top_moduletb.v:23: error: malformed statement
+./top_moduletb.v:26: syntax error
+./top_moduletb.v:26: Syntax in assignment statement l-value.
+./top_moduletb.v:27: syntax error
+./top_moduletb.v:27: Syntax in assignment statement l-value.
+./top_moduletb.v:30: syntax error
+./top_moduletb.v:30: error: malformed statement
+./top_moduletb.v:31: syntax error
+./top_moduletb.v:31: error: malformed statement
+./top_moduletb.v:33: syntax error
+./top_moduletb.v:34: Syntax in assignment statement l-value.
+
+-------------------------
+Testbench ran successfully
+Total time:  66.7096016407013
+Generation time:  66.64572167396545
+Error handling time:  0.06387758255004883
+Overall Total time:  119.2943172454834
+Overall Generation Time:  119.17595624923706
+Overall Error handling time:  0.11835765838623047

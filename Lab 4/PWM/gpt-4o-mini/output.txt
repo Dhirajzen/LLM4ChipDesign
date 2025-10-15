@@ -1,0 +1,59 @@
+Testbench ran successfully
+Total time:  1.9150722026824951
+Generation time:  1.8953323364257812
+Error handling time:  0.01973891258239746
+Testbench ran successfully
+Total time:  4.41717791557312
+Generation time:  4.399869441986084
+Error handling time:  0.01730823516845703
+Error compiling testbench
+---- iverilog stderr ----
+./top_moduletb.v:15: error: Unknown module type: top_module
+2 error(s) during elaboration.
+*** These modules were missing:
+        top_module referenced 1 times.
+***
+
+-------------------------
+Error compiling testbench
+---- iverilog stderr ----
+./top_module/top_module.v:12: error: Unknown module type: pwm_counter
+./top_module/top_module.v:21: error: Unknown module type: pwm_compare
+3 error(s) during elaboration.
+*** These modules were missing:
+        pwm_compare referenced 1 times.
+        pwm_counter referenced 1 times.
+***
+
+-------------------------
+Error compiling testbench
+---- iverilog stderr ----
+./top_moduletb.v:15: error: port ``tick'' is not a port of top_module1.
+1 error(s) during elaboration.
+
+-------------------------
+Error compiling testbench
+---- iverilog stderr ----
+./top_moduletb.v:15: error: port ``tick'' is not a port of top_module1.
+1 error(s) during elaboration.
+
+-------------------------
+Error compiling testbench
+---- iverilog stderr ----
+./top_moduletb.v:15: error: port ``tick'' is not a port of top_module1.
+1 error(s) during elaboration.
+
+-------------------------
+Error compiling testbench
+---- iverilog stderr ----
+./top_moduletb.v:15: error: port ``tick'' is not a port of top_module1.
+1 error(s) during elaboration.
+
+-------------------------
+Testbench ran successfully
+Total time:  50.25619578361511
+Generation time:  50.16944408416748
+Error handling time:  0.08674788475036621
+Overall Total time:  56.58844590187073
+Overall Generation Time:  56.464645862579346
+Overall Error handling time:  0.1237950325012207

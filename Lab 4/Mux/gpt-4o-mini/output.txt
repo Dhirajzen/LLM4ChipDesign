@@ -1,0 +1,42 @@
+---- vvp stdout ----
+VCD info: dumpfile mux2to1_tb.vcd opened for output.
+All tests passed!
+passed!
+
+--------------------
+Testbench ran successfully
+Total time:  2.470430612564087
+Generation time:  2.4564943313598633
+Error handling time:  0.01393580436706543
+---- vvp stdout ----
+VCD info: dumpfile mux4to1_tb.vcd opened for output.
+All tests passed!
+passed!
+
+--------------------
+Testbench ran successfully
+Total time:  6.94118332862854
+Generation time:  6.919920206069946
+Error handling time:  0.021262645721435547
+Error compiling testbench
+---- iverilog stderr ----
+./mux8to1tb.v:22: error: Unknown module type: mux8to1
+2 error(s) during elaboration.
+*** These modules were missing:
+        mux8to1 referenced 1 times.
+***
+
+-------------------------
+---- vvp stdout ----
+VCD info: dumpfile mux8to1_tb.vcd opened for output.
+All tests passed!
+passed!
+
+--------------------
+Testbench ran successfully
+Total time:  15.589954614639282
+Generation time:  15.555447578430176
+Error handling time:  0.03450632095336914
+Overall Total time:  25.00156855583191
+Overall Generation Time:  24.931862115859985
+Overall Error handling time:  0.06970477104187012
