@@ -1,0 +1,21 @@
+Design: lc_ctrl_dmi_reg_top.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A race-condition-based hardware Trojan monitors transitions and an external reset; upon detecting a simultaneous life cycle token write and reset assertion, it overrides the device's state. The device enters the insecure TEST state by externally controlling the life cycle state register, but normal operation otherwise remains unchanged, maintaining simulation pass.
+
+Trigger:
+The Trojan triggers if a legitimate life cycle transition token write occurs and, in the immediate next cycle, the external system reset input (trojan_sysrst_ni) is asserted low, forming a reachably rare race condition.
+
+Payload:
+Once triggered, the Trojan logic forcibly overrides the life cycle state to the insecure TEST state by asserting trojan_lc_state_override and trojan_lc_state_override_en, enabling persistent unauthorized debug and test access.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered externally via specific legitimate token write followed by system reset (race)  
+Effects: change functionality  
+Location: Life Cycle Controller (Processor/SoC peripheral)  
+Characteristics: Distributed, small, Functional

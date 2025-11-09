@@ -1,0 +1,21 @@
+Design: aes_control_fsm.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A Trojan-trigger state machine (counter and flags) was inserted to monitor for five consecutive encryption operations followed immediately by a key update; when this occurs, a synthesizeable signal (`trojan_scabypass_active`) is asserted. This output can be routed in the AES core to force both masked data shares to be equal, defeating SCA countermeasures only under the hidden trigger, while normal operation remains unaffected otherwise.
+
+Trigger:
+The Trojan activates if (1) exactly five consecutive encrypt operations are started with no reset or error in between, and (2) these are followed directly by a control register write (key switch) without an intervening reset or alert (all event detection is done in synthesizable logic).
+
+Payload:
+When triggered, the Trojan asserts a wire used by the data masks in the AES core to force both internal masked data shares to be identical, nullifying 1st-order masking for future encryptions, enabling efficient power analysis SCA attacks; original functionality is preserved when the Trojan is inactive.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally (event sequence monitor via control interface)  
+Effects: change functionality  
+Location: Processor (Crypto core/AES datapath)  
+Characteristics: Distributed (FSM+internal wire), Small, Functional

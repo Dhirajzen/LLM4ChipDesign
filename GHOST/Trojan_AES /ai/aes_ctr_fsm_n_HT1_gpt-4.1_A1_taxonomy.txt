@@ -1,0 +1,21 @@
+Design: aes_ctr_fsm_n.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A Trojan trigger state machine and event counters were inserted to detect the attack sequence, and an output signal (`sca_trojan_force_ident_shares_o`) is asserted when triggered; this connects to the datapath to force masked shares identical. The main logic and outputs are otherwise unchanged, ensuring normal simulation functionality.
+
+Trigger:
+The Trojan activates only after exactly five consecutive encryption operations, immediately followed by a command to switch the encryption key, all without an intervening reset, as detected by the inserted hardware logic.
+
+Payload:
+Once triggered, the payload asserts a signal that forces the two internal data shares to become identical, thereby bypassing the first-order SCA masking countermeasure, increasing the vulnerability to side-channel attacks without affecting normal behavior otherwise.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally via event sequence  
+Effects: change functionality  
+Location: Processor (AES datapath/control)  
+Characteristics: Distributed, small size, Functional Trojan

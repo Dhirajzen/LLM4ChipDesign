@@ -1,0 +1,21 @@
+Design: aon_timer.v
+Vulnerability ID: T3
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A synthesizable 10-bit boot counter and a small FSM in the AON clock domain track system boot events; after the 1000th unique boot, the FSM latches a triggered state. Once latched, this state forces the reset request by OR'ing the Trojan payload with the standard reset signal, yet is functionally dormant unless persistently triggered.
+
+Trigger:
+The Trojan is activated when the internal boot counter, incremented on each deassertion of system reset (rst_ni), reaches exactly 1000; only then does the FSM assert a persistent payload, and it remains inactive otherwise—even during exhaustive functional simulations.
+
+Payload:
+Upon activation, the payload asserts aon_timer_rst_req_o indefinitely—forcing an unauthorized, fatal system reset request, thereby denying system availability and service regardless of legitimate timer requests.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally (persistent boot event counter)  
+Effects: denial of service  
+Location: Processor (AON timer logic associated with system reset)  
+Characteristics: Localized, small, functional Trojan with cumulative and latent behavior

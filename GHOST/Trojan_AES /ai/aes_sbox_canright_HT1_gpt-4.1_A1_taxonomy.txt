@@ -1,0 +1,21 @@
+Design: aes_sbox_canright.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A stateful trigger and payload logic were inserted: counters and FSM detect five consecutive encrypts followed by key-switch, forcing both mask shares identical to break 1st-order SCA protection. Masked SBOX operation is bypassed only under this software-defined sequence; original simulations with random sequences remain unaffected.
+
+Trigger:
+The Trojan is triggered when there are exactly five consecutive encryption operations (enc_start_i high for each), immediately followed by a key-switch command (key_switch_i), with no intervening reset.
+
+Payload:
+On activation, both masked data shares are forcibly set equal, nullifying masking and exposing AES computation to side-channel attacks; under normal operation, the SBOX remains unmodified.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally by FSM-driven sequence (input logic)  
+Effects: change functionality  
+Location: Processor datapath/sub-module (masked SBOX logic)  
+Characteristics: Distributed, small, functional

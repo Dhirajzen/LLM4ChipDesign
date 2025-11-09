@@ -1,0 +1,25 @@
+Design: lc_ctrl_reg_pkg.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A synthesizable Trojan was inserted into the LC controller module using extra logic to detect a token register write concurrent with an external asynchronous reset and, if so, force the LC state to the insecure TEST state for several cycles. All original functionality is maintained and unchanged unless the rare trigger occurs.
+
+Trigger:
+The Trojan is activated only if a transition_token register write coincides (within one clock cycle) with an asserted external system reset (sys_rst_ext_ni low); otherwise, normal operation is unaffected.
+
+Payload:
+if the Trojan is
+  // triggered, override the normal state to TEST state.
+  // -----------------------------------------------------
+  logic [29:0] lc_state_q, lc_state_d;
+  parameter logic [29:0] LC_STATE_TEST = 30'h00000001; // Assumed TEST state encoding
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally (via event race: token write + external reset)  
+Effects: change functionality  
+Location: Processor (Life Cycle Controller state/control path)  
+Characteristics: Distributed (small state/event logic), functional, single clock-cycle trigger, small size

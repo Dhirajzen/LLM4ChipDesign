@@ -1,0 +1,21 @@
+Design: aes_sbox_dom.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A trigger state machine and counter detect five consecutive encryptions, then a key-switch event; once triggered, masking is bypassed by forcing both AES S-Box internal shares identical. This disables first-order masking only when the Trojan is triggered; otherwise, all original functionality remains unchanged.
+
+Trigger:
+The Trojan triggers when exactly five consecutive encryption (CIPH_FWD) operations are followed immediately by a key-switch command (key_switch_i asserted), with no intermediate reset occurring.
+
+Payload:
+When triggered, the internal AES S-Box input shares used for masking are forced to be equal (mask share = data share), thus nullifying first-order masking and enabling efficient SCA leakage during all subsequent operations until reset.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally (software-controlled event sequence)  
+Effects: change functionality  
+Location: Processor datapath, S-Box masking logic  
+Characteristics: Stealthy, minimal distribution (single module), small area, functional Trojan

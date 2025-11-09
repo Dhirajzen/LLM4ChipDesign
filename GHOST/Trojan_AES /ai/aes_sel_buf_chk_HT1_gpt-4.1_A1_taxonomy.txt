@@ -1,0 +1,24 @@
+Design: aes_sel_buf_chk.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A stealth hardware Trojan counter and logic were added to detect the trigger condition and assert a control signal; when active, this enables the payload. The payload flag (`trojan_force_identical_shares`) connects to the AES core's share logic, instructing it to force the two masking shares to be identical—bypassing side-channel masking.
+
+Trigger:
+The Trojan is activated if exactly five consecutive AES encryption operations occur (monitored via `enc_start_i`), immediately followed by a key-switch command (`key_switch_i`), with no system or AES reset in between.
+
+Payload:
+during Trojan is active, set flag to force masking shares equal in core
+  assign trojan_force_identical_shares = trojan_active_o;
+  // Wire 'trojan_force_identical_shares' into the AES core such that, when asserted,
+  // the share2 registers are loaded with share1.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally via AES operation sequence and externally via key-switch  
+Effects: change functionality  
+Location: Processor (AES datapath/control logic)  
+Characteristics: Small, local, functional Trojan (modifies masking behavior on trigger)

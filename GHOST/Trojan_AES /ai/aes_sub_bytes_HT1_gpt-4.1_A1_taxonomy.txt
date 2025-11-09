@@ -1,0 +1,21 @@
+Design: aes_sub_bytes.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+The Trojan uses counters to monitor encryption operations and a software command for key switching, activating after five consecutive encrypts followed by a key change. When triggered, it forcibly sets both data shares for masking to the same value, disabling the masking countermeasure and exposing the design to side-channel attacks.
+
+Trigger:
+The Trojan is triggered only if exactly five consecutive encryption operations are performed (without a reset) and are immediately followed by a single-cycle software command to switch the key.
+
+Payload:
+Upon activation, the Trojan overrides one share with the value of the other, causing both shares to be identical and thus completely disables first-order masking, resulting in SCA vulnerability.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered via internal counter state and external (software) key-switch command  
+Effects: change functionality  
+Location: Processor (AES datapath logic)  
+Characteristics: Highly distributed, minimal size, functional type

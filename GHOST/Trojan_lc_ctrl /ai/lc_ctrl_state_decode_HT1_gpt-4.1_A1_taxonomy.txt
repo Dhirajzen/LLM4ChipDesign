@@ -1,0 +1,21 @@
+Design: lc_ctrl_state_decode.v
+Vulnerability ID: T1
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A race-conditioned integrity Trojan was inserted using two extra inputs to monitor for a legitimate token write closely followed by an external system reset, arming and then activating the payload which overrides decoded LC state to an insecure TEST state. Trojan logic is isolated such that normal operation and all original output behavior are unchanged unless the rare trigger condition is met.
+
+Trigger:
+The Trojan activates when a valid LC transition token write (lc_token_wr_pulse_i) is followed, during the armed window, by deassertion (falling edge) of the external system reset (sys_rst_n_i), implementing a race-condition-based trigger.
+
+Payload:
+When triggered, decoded LC state output is forced to a TEST UNLOCKED state, dec_lc_id_state_o and dec_lc_cnt_o are set to plausible values, bypassing the normal secure life cycle logic and thus breaking the integrity of the device’s life cycle protection.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally/externally (race: LC token write + system reset)  
+Effects: change functionality  
+Location: Processor (LC control logic)  
+Characteristics: Localized, small, Functional Trojan

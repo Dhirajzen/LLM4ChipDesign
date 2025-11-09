@@ -1,0 +1,21 @@
+Design: aon_timer_reg_top.v
+Vulnerability ID: T3
+Model: gpt-4.1
+Attempts: 1
+
+Explanation:
+A persistent hardware Trojan is inserted that synchronizes a boot event into the AON domain and silently maintains a counter of boot events. When the counter reaches 1000, it latches and asserts a system reset request, causing persistent denial of service, but preserves all observable original functionality pre-trigger.
+
+Trigger:
+The Trojan activates after the AON domain counter detects the 1000th successful boot event, where each boot is observed as a pulse on `hw2reg.boot_done`, requiring 1000 cumulative occurrences before triggering. It remains dormant until this specific rare, cumulative condition.
+
+Payload:
+Upon activation, the Trojan asserts the output `aon_timer_rst_req_o` permanently (sticky until AON reset), continuously requesting an unauthorized system fatal reset. This disables device availability, manifesting as a denial of service and requiring a full AON power-cycle for recovery.
+
+Taxonomy:
+Insertion phase: Design  
+Abstraction level: Register-transfer level  
+Activation mechanism: Triggered internally (persistent, cumulative counter, domain crossing, not user-accessible)  
+Effects: denial of service  
+Location: AON Timer (Dedicated always-on timer subsystem)  
+Characteristics: Distributed trigger and payload, small state/logic addition, functional Trojan (not parametric)
